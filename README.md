@@ -29,7 +29,7 @@ docker-compose up -d
 These three containers will work as follows:
 1. Container 1 goes up and ingests [data](https://github.com/viccsouza/Mariadb-to-S3/blob/main/data/database/datadump.sql) into its database from its entrypoint. The container continues to work.
 2. Container 2 goes up, runs the [dump_start.sh](https://github.com/viccsouza/Mariadb-to-S3/blob/main/app/dumper/dump_start.sh) script that connects to container 1 and dumps it in a folder shared with container 3. Soon after this process the container becomes unavailable.
-3. Container 3 goes up, starts the [cronjob](https://github.com/viccsouza/Mariadb-to-S3/blob/main/app/s3-sender/crontab) that runs the [python](https://github.com/viccsouza/Mariadb-to-S3/blob/main/app/s3-sender/send-to-s3.py) script to periodically checks the presence of the dump file in the shared folder with Container 1 and checks the existence of the bucket to create it and sends it to the S3 bucket. After this process, the dump file in the shared folder is deleted and the containers keeps checking the presence of a new dump.
+3. Container 3 goes up, starts the [cronjob](https://github.com/viccsouza/Mariadb-to-S3/blob/main/app/s3-sender/crontab) that runs the [python](https://github.com/viccsouza/Mariadb-to-S3/blob/main/app/s3-sender/send-to-s3.py) script to periodically checks the presence of the dump file in the shared folder with Container 2 and checks the existence of the bucket to create it and sends it to the S3 bucket. After this process, the dump file in the shared folder is deleted and the containers keeps checking the presence of a new dump.
 
 
 ### AWS S3 Bucket
